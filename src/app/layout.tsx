@@ -1,10 +1,5 @@
-import React from "react";
-import './globals.css';
-
-export const metadata = {
-  title: "Vanio Diesel",
-  description: "Mecânica especializada em diesel",
-};
+import "./globals.css";
+import Header from "./components/header";
 
 export default function RootLayout({
   children,
@@ -15,5 +10,5 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body>{children}</body>
     </html>
-  );
+  )
 }
