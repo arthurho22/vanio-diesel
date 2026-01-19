@@ -1,12 +1,20 @@
 "use client";
 
+import React from "react";
+import { useState } from "react";
 import Header from "./components/header";
+import BudgetModal from "./components/budgetModal";
+import Differentials from "./components/diferenciais";
 import { motion } from "framer-motion";
 import { Wrench, Cpu, Fuel } from "lucide-react";
+import Footer from "./components/footer";
+
 
 export default function Home() {
+  const [openBudget, setOpenBudget] = useState(false);
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-24">
       {/* HEADER */}
       <Header />
 
@@ -28,12 +36,12 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <a
-              href="#contato"
+            <button
+              onClick={() => setOpenBudget(true)}
               className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
             >
               Solicitar orçamento
-            </a>
+            </button>
 
             <a
               href="#servicos"
@@ -44,6 +52,9 @@ export default function Home() {
           </div>
         </motion.div>
       </main>
+
+      {/* DIFERENCIAIS */}
+      <Differentials />
 
       {/* SERVIÇOS */}
       <section id="servicos" className="bg-gray-50 py-24">
@@ -59,74 +70,71 @@ export default function Home() {
           </motion.h2>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {/* Card 1 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="group rounded-xl bg-white p-8 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
-                <Wrench size={26} />
-              </div>
+            <ServiceCard
+              icon={<Wrench size={26} />}
+              title="Manutenção Preventiva"
+              text="Revisões completas para evitar falhas e garantir maior vida útil do motor diesel."
+              delay={0}
+            />
 
-              <h3 className="mb-3 text-xl font-semibold text-gray-800">
-                Manutenção Preventiva
-              </h3>
+            <ServiceCard
+              icon={<Cpu size={26} />}
+              title="Diagnóstico Eletrônico"
+              text="Tecnologia avançada para identificar falhas eletrônicas com rapidez e precisão."
+              delay={0.1}
+            />
 
-              <p className="text-gray-600">
-                Revisões completas para evitar falhas e garantir maior vida útil
-                do motor diesel.
-              </p>
-            </motion.div>
-
-            {/* Card 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="group rounded-xl bg-white p-8 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
-                <Cpu size={26} />
-              </div>
-
-              <h3 className="mb-3 text-xl font-semibold text-gray-800">
-                Diagnóstico Eletrônico
-              </h3>
-
-              <p className="text-gray-600">
-                Tecnologia avançada para identificar falhas eletrônicas com
-                rapidez e precisão.
-              </p>
-            </motion.div>
-
-            {/* Card 3 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="group rounded-xl bg-white p-8 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
-                <Fuel size={26} />
-              </div>
-
-              <h3 className="mb-3 text-xl font-semibold text-gray-800">
-                Injeção Diesel
-              </h3>
-
-              <p className="text-gray-600">
-                Ajuste e manutenção do sistema de injeção para máximo desempenho
-                e economia.
-              </p>
-            </motion.div>
+            <ServiceCard
+              icon={<Fuel size={26} />}
+              title="Injeção Diesel"
+              text="Ajuste e manutenção do sistema de injeção para máximo desempenho e economia."
+              delay={0.2}
+            />
           </div>
         </div>
       </section>
+
+      {/* MODAL ORÇAMENTO */}
+      <BudgetModal
+        isOpen={openBudget}
+        onClose={() => setOpenBudget(false)}
+      />
+
+      <Footer />
+
     </div>
+  );
+}
+
+/* COMPONENTE REUTILIZÁVEL DOS CARDS */
+function ServiceCard({
+  icon,
+  title,
+  text,
+  delay,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  text: string;
+  delay: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+      viewport={{ once: true }}
+      className="group rounded-xl bg-white p-8 shadow-md transition hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition group-hover:bg-blue-600 group-hover:text-white">
+        {icon}
+      </div>
+
+      <h3 className="mb-3 text-xl font-semibold text-gray-800">
+        {title}
+      </h3>
+
+      <p className="text-gray-600">{text}</p>
+    </motion.div>
   );
 }
