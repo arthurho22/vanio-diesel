@@ -1,25 +1,29 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+
 import Header from "./components/header";
 import BudgetModal from "./components/budgetModal";
+import ContactModal from "./components/contactModal";
 import Differentials from "./components/diferenciais";
+import Footer from "./components/footer";
+import FloatingWhatsapp from "./components/FloatingWhatsapp";
+
+
 import { motion } from "framer-motion";
 import { Wrench, Cpu, Fuel } from "lucide-react";
-import Footer from "./components/footer";
-
 
 export default function Home() {
   const [openBudget, setOpenBudget] = useState(false);
+  const [openContact, setOpenContact] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white pt-24">
+    <div className="min-h-screen bg-white scroll-smooth">
       {/* HEADER */}
-      <Header />
+      <Header onOpenContact={() => setOpenContact(true)} />
 
       {/* HERO */}
-      <main className="mx-auto max-w-7xl px-6 py-24">
+      <main className="mx-auto max-w-7xl px-6 pt-32 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,6 +53,14 @@ export default function Home() {
             >
               Ver serviços
             </a>
+
+            <button
+              onClick={() => setOpenContact(true)}
+              className="rounded-lg border border-blue-600 px-6 py-3 font-medium text-blue-600 transition hover:bg-blue-50"
+            >
+              
+              Contato
+            </button>
           </div>
         </motion.div>
       </main>
@@ -94,26 +106,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MODAL ORÇAMENTO */}
+      {/* MODAIS */}
       <BudgetModal
         isOpen={openBudget}
         onClose={() => setOpenBudget(false)}
       />
 
+      <ContactModal
+        isOpen={openContact}
+        onClose={() => setOpenContact(false)}
+      />
+
       <Footer />
+      <FloatingWhatsapp />
 
     </div>
   );
 }
 
-/* COMPONENTE REUTILIZÁVEL DOS CARDS */
+/* CARD REUTILIZÁVEL */
 function ServiceCard({
   icon,
   title,
   text,
   delay,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   text: string;
   delay: number;
