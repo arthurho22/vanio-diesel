@@ -1,32 +1,37 @@
-"use client";
+import Link from "next/link";
 
-interface HeaderProps {
-  onOpenContact: () => void;
-}
-
-export default function Header({ onOpenContact }: HeaderProps) {
+export default function Header() {
   return (
-    <header className="fixed top-0 z-40 w-full bg-blue-600 text-white shadow-md">
+    <header className="w-full bg-blue-600">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <h1 className="text-xl font-bold">Vanio Diesel</h1>
+        
+        {/* LOGO */}
+        <Link href="/" className="text-xl font-bold text-white">
+          Vanio Diesel
+        </Link>
 
-        <nav className="flex gap-6 text-sm font-medium">
-          <a href="#" className="hover:text-blue-200">
+        {/* MENU */}
+        <nav className="flex items-center gap-8 text-sm font-medium text-white">
+          <Link href="/" className="transition hover:text-gray-200">
             Início
-          </a>
+          </Link>
 
-          <a href="#servicos" className="hover:text-blue-200">
+          <Link href="/#servicos" className="transition hover:text-gray-200">
             Serviços
-          </a>
+          </Link>
 
-          {/* 👇 BOTÃO CONTATO */}
-          <button
-            onClick={onOpenContact}
-            className="hover:text-blue-200"
-          >
+          <Link href="/#contato" className="transition hover:text-gray-200">
             Contato
-          </button>
+          </Link>
+
+          <Link
+            href="/agendamento"
+            className="rounded-lg bg-orange-500 px-4 py-2 transition hover:bg-orange-600"
+          >
+            Agendar Serviço
+          </Link>
         </nav>
+
       </div>
     </header>
   );

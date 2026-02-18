@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-
+import Agendamento from "./agendamento/page";
 import Header from "./components/header";
 import BudgetModal from "./components/budgetModal";
 import ContactModal from "./components/contactModal";
@@ -11,7 +11,7 @@ import FloatingWhatsapp from "./components/FloatingWhatsapp";
 
 
 import { motion } from "framer-motion";
-import { Wrench, Cpu, Fuel } from "lucide-react";
+import { Wrench, Cpu, Fuel, Route } from "lucide-react";
 
 export default function Home() {
   const [openBudget, setOpenBudget] = useState(false);
